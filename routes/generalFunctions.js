@@ -11,6 +11,37 @@ const generalFunctions = {
 			return s;
 		};
 		res.send(reverseParentheses(req.body.string));
+	},
+	groupWord: function(req, res) {
+		let wordsArray = ['AMOR', 'XISELA', 'JAMON', 'ROMA', 'OMAR', 'MORA', 'ESPONJA', 'RAMO', 'JAPONES', 'ARMO', 'MOJAN', 'MARO', 'ORAM', 'MONJA', 'ALEXIS'];
+
+		function sortStrChars(str) {
+			if (!str) {
+				return;
+			}
+			str = str.split('');
+			str = str.sort();
+			str = str.join('');
+			return str;
+		}
+
+		function getGroupedAnagrams(wordsArray) {
+			const anagrams = {};
+			wordsArray.forEach((word) => {
+				const sortedWord = sortStrChars(word);
+				if (anagrams[sortedWord]) {
+					return anagrams[sortedWord].push(word);
+				}
+				anagrams[sortedWord] = [word];
+			});
+			return anagrams;
+		}
+
+		const groupedAnagrams = getGroupedAnagrams(wordsArray);
+		for (const sortedWord in groupedAnagrams) {
+			console.log(groupedAnagrams[sortedWord].toString());
+		}
+		res.send(groupedAnagrams);
 	}
 }
 
